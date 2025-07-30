@@ -1,6 +1,21 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+/**
+ * App.tsx - Ana Quiz Uygulaması
+ * 
+ * Bu component quiz'in merkezi kontrolcüsüdür:
+ * - Tüm state yönetimini yapar
+ * - Quiz akışını kontrol eder (başlangıç -> sorular -> sonuç)
+ * - Child componentlere props geçer ve callback'leri yönetir
+ * - Quiz verilerini tutar ve karıştırır
+ */
 
+import { useState} from "react";
+import "./App.css";
+import StartScreen from "./components/StartScreen";
+import QuizQuestion from "./components/QuizQuestion";
+import Timer from "./components/Timer";
+import FinalResult from "./components/FinalResults";
+
+// Quiz soruları - kahve ile ilgili 10 soru
 const quiz = [
   {
     question: "Espresso'nun en üstündeki kremamsı tabakaya ne ad verilir?",
@@ -79,234 +94,133 @@ const quiz = [
     answer: "9",
   },
 ];
-function App() {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selecetedAnswer, setSelecetedAnswer] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-  const [showFinalResult, setShowFinalResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
-  const [shuffledQuiz, setShuffledQuiz] = useState(quiz);
-  const [quizStarted, setQuizStarted] = useState(false); 
 
+function App() {
+  // State yönetimi - Quiz'in mevcut durumunu tutar
+  const [currentQuestion, setCurrentQuestion] = useState(0); // Hangi soruda olduğumuz (0-9)
+  const [score, setScore] = useState(0); // Kullanıcının puanı (0-10)
+  const [showFinalResult, setShowFinalResult] = useState(false); // Sonuç ekranı gösterilsin mi?
+  const [shuffledQuiz, setShuffledQuiz] = useState(() => 
+    [...quiz].sort(() => Math.random() - 0.5) // Quiz'i karıştırılmış halde başlat
+  );
+  const [quizStarted, setQuizStarted] = useState(false); // Quiz başladı mı?
+
+  /**
+   * Quiz sorularını karıştırır
+   * Her yeni quiz başlangıcında farklı sıralama için kullanılır
+   */
   const shuffleQuiz = () => {
-    // Quiz array'ini kopyala ve karıştır
     const shuffled = [...quiz].sort(() => Math.random() - 0.5);
     setShuffledQuiz(shuffled);
   };
 
-  useEffect(() => {
-    shuffleQuiz();
-  }, []);
-
-  // Quiz başladığında süreyi başlat
-  useEffect(() => {
-    if (quizStarted) {
-      setTimeLeft(60);
-    }
-  }, [currentQuestion, quizStarted]);
-
-  // Süre sayacı sadece quiz başladığında çalışsın
-  useEffect(() => {
-    if (quizStarted && timeLeft > 0 && !showFinalResult && !showResult) {
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-
-    if (quizStarted && timeLeft === 0 && !showFinalResult && !showResult) {
-      handleTimeUp();
-    }
-  }, [timeLeft, showResult, showFinalResult, quizStarted]);
-
-  const handleTimeUp = () => {
-    setShowResult(true);
-
-    if (selecetedAnswer === shuffledQuiz[currentQuestion].answer) {
-      setScore((prevScore) => prevScore + 1);
-    }
-
-    setTimeout(() => {
-      if (currentQuestion + 1 < quiz.length) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelecetedAnswer(null);
-        setShowResult(false);
-      } else {
-        setShowFinalResult(true);
-      }
-    }, 1500);
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  const handleAnswer = () => {
-    setShowResult(true);
-
-    if (selecetedAnswer === shuffledQuiz[currentQuestion].answer) {
-      setScore((prevScore) => prevScore + 1);
-    }
-
-    setTimeout(() => {
-      if (currentQuestion + 1 < shuffledQuiz.length) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelecetedAnswer(null);
-        setShowResult(false);
-      } else {
-        setShowFinalResult(true);
-      }
-    }, 1500);
-  };
+  /**
+   * Quiz'i başlatan fonksiyon
+   * - Tüm state'leri sıfırlar
+   * - Quiz ekranını açar
+   * - Soruları yeniden karıştırır
+   */
   const startQuiz = () => {
-    setQuizStarted(true);
-    setCurrentQuestion(0);
-    setSelecetedAnswer(null);
-    setScore(0);
-    setShowResult(false);
-    setShowFinalResult(false);
-    setTimeLeft(60);
-    shuffleQuiz();
+    setQuizStarted(true); // Quiz ekranına geç
+    setCurrentQuestion(0); // İlk sorudan başla
+    setScore(0); // Puanı sıfırla
+    setShowFinalResult(false); // Sonuç ekranını kapat
+    shuffleQuiz(); // Soruları yeniden karıştır
   };
 
+  /**
+   * Quiz'i sıfırlar ve başlangıç ekranına döner
+   * "Tekrar Başla" butonuna basıldığında çalışır
+   */
   const resetQuiz = () => {
-    setQuizStarted(false); // Quiz'i durdur
-    setCurrentQuestion(0);
-    setSelecetedAnswer(null);
-    setShowResult(false);
-    setShowFinalResult(false);
-    setScore(0);
-    setTimeLeft(60);
+    setQuizStarted(false); // Başlangıç ekranına dön
+    setCurrentQuestion(0); // İlk soruya reset
+    setShowFinalResult(false); // Sonuç ekranını kapat
+    setScore(0); // Puanı sıfırla
   };
 
-  const isCorrectAnswer = selecetedAnswer === quiz[currentQuestion].answer;
+  /**
+   * Kullanıcı cevap verdiğinde çalışan fonksiyon
+   * - Doğruysa puanı artırır
+   * - Sonraki soruya geçer veya quiz'i bitirir
+   */
+  const handleAnswer = (selectedAnswer: string | null, isCorrect: boolean) => {
+    if (isCorrect) {
+      setScore(prevScore => prevScore + 1); // Doğru cevap için puan ver
+    }
 
-  // Başlangıç ekranı
+    // Sonraki soruya geç veya quiz'i bitir
+    if (currentQuestion + 1 < shuffledQuiz.length) {
+      setCurrentQuestion(currentQuestion + 1); // Sonraki soruya geç
+    } else {
+      setShowFinalResult(true); // Son soru, sonucu göster
+    }
+  };
+
+  /**
+   * Süre dolduğunda çalışan fonksiyon
+   * Kullanıcı cevap vermeden süre dolduğunda sonraki soruya geçer (puan vermez)
+   */
+  const handleTimeUp = () => {
+    // Süre dolduğunda sonraki soruya geç (puan verilmez)
+    if (currentQuestion + 1 < shuffledQuiz.length) {
+      setCurrentQuestion(currentQuestion + 1); // Sonraki soruya geç
+    } else {
+      setShowFinalResult(true); // Son soru, sonucu göster
+    }
+  };
+
+  // Quiz başlamadıysa başlangıç ekranını göster
   if (!quizStarted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-brown-600 to-brown-800 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold text-brown-600 mb-6">Kahve Quiz</h1>
-          <div className="space-y-4 mb-8">
-            <p className="text-gray-700">Kahve bilginizi test edin!</p>
-            <div className="text-sm text-gray-600 space-y-2">
-              <p>• 10 soru</p>
-              <p>• Her soru için 1 dakika</p>
-            </div>
-          </div>
-          <button
-            onClick={startQuiz}
-            className="bg-brown-600 hover:bg-brown-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg"
-          >
-            Quiz'i Başlat
-          </button>
-        </div>
-      </div>
-    );
+    return <StartScreen onStartQuiz={startQuiz} />;
   }
 
+  // Ana quiz ekranı
   return (
+    // Arkaplan resmi ile tam ekran container
     <div 
       className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4"
       style={{ backgroundImage: `url('https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')` }}
     >
+      {/* Ana quiz kartı */}
       <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-xl p-6 max-w-md w-full min-h-[500px] flex flex-col">
+        {/* Header - Başlık ve ilerleme */}
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-brown-600">Kahve Quiz</h1>
-
           <div className="flex justify-between items-center mb-4">
+            {/* Soru sayacı */}
             <p className="text-gray-600">
               {currentQuestion + 1} / {shuffledQuiz.length}
             </p>
-            <div
-              className={`text-lg font-bold ${
-                timeLeft <= 10 ? `text-red-600` : `text-gray-800`
-              }`}
-            >
-              {formatTime(timeLeft)}
-            </div>
+            {/* Timer component */}
+            <Timer 
+              duration={60} // 60 saniye
+              onTimeUp={handleTimeUp} // Süre dolduğunda çağrılır
+              isActive={!showFinalResult} // Quiz bitmediyse aktif
+              resetTrigger={currentQuestion} // Her yeni soruda reset
+            />
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
-          <div className="mb-6 flex-1">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 min-h-[3rem]">
-              {shuffledQuiz[currentQuestion].question}
-            </h2>
-
-            <div className="space-y-2">
-              {shuffledQuiz[currentQuestion].options.map((option, index) => {
-                const isSelected = selecetedAnswer === option;
-                const isCorrect =
-                  option === shuffledQuiz[currentQuestion].answer;
-
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setSelecetedAnswer(option)}
-                    disabled={showResult}
-                    className={`w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 min-h-[3rem] ${
-                      showResult
-                        ? isCorrect
-                          ? "border-green-600 bg-green-50/80"
-                          : isSelected
-                          ? "border-red-600 bg-red-50/80"
-                          : "border-gray-200 bg-gray-50/80"
-                        : isSelected
-                        ? "border-blue-600 bg-blue-50/80"
-                        : "border-gray-200 hover:border-blue-500 bg-white/60"
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">{option}</span>
-                      {showResult && (
-                        <span className="text-xl">
-                          {isCorrect ? "✅" : isSelected ? "❌" : ""}
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="text-center mt-auto">
-            <button
-              onClick={handleAnswer}
-              disabled={!selecetedAnswer || showResult}
-              className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              {showResult
-                ? isCorrectAnswer
-                  ? "Doğru! ✅"
-                  : "Yanlış! ❌"
-                : "Cevapla"}
-            </button>
-          </div>
+        {/* Quiz sorusu */}
+        <div className="flex-1">
+          <QuizQuestion
+            question={shuffledQuiz[currentQuestion].question}
+            options={shuffledQuiz[currentQuestion].options}
+            correctAnswer={shuffledQuiz[currentQuestion].answer}
+            onAnswer={handleAnswer} // Cevap verildiğinde çağrılır
+            resetTrigger={currentQuestion} // Her yeni soruda reset
+          />
         </div>
       </div>
 
+      {/* Sonuç modal'ı - quiz bittiğinde gösterilir */}
       {showFinalResult && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Quiz Tamamlandı!
-            </h2>
-            <p className="text-xl text-gray-700 mb-6">
-              {score} / {shuffledQuiz.length}
-            </p>
-            <button
-              onClick={resetQuiz}
-              className="bg-brown-600 hover:bg-brown-700 text-white py-3 font-bold px-6 rounded-lg transition-colors"
-            >
-              Tekrar Başla
-            </button>
-          </div>
-        </div>
+        <FinalResult
+          score={score}
+          totalQuestions={shuffledQuiz.length}
+          onRestart={resetQuiz} // Tekrar başlat butonuna basıldığında çağrılır
+        />
       )}
     </div>
   );

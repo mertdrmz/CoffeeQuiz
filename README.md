@@ -1,69 +1,169 @@
-# React + TypeScript + Vite
+# ☕ Kahve Quiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern React ve TypeScript ile geliştirilmiş etkileşimli kahve bilgi quiz uygulaması.
 
-Currently, two official plugins are available:
+![Kahve Quiz](./public/app.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Özellikler
 
-## Expanding the ESLint configuration
+- **10 kahve sorusu** - Espresso'dan cold brew'a kadar geniş konu yelpazesi
+- **60 saniye süre** - Her soru için 1 dakika
+- **Gerçek zamanlı sayaç** - Son 10 saniyede kırmızıya döner
+- **Anında feedback** - Doğru/yanlış cevap gösterimi
+- **Skor takibi** - Quiz sonunda toplam puan
+- **Rastgele sıralama** - Her seferinde farklı soru sırası
+- **Responsive tasarım** - Mobil ve desktop uyumlu
+- **Modern UI** - Tailwind CSS ile şık tasarım
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Canlı Demo
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+[Demo'yu Görün](https://your-demo-link.com) *(Demo linkinizi buraya ekleyin)*
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Teknolojiler
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **React 19.1.0** - Modern React hooks ile
+- **TypeScript 5.8.3** - Tip güvenliği
+- **Vite 7.0.4** - Hızlı geliştirme ve build
+- **Tailwind CSS 3.4.17** - Utility-first CSS
+- **ESLint** - Kod kalitesi kontrolü
+
+## 📦 Kurulum
+
+### Gereksinimler
+- Node.js (18.0.0 veya üzeri)
+- npm veya yarn
+
+### Adımlar
+
+1. **Projeyi klonlayın**
+   ```bash
+   git clone https://github.com/kullanici-adi/kahve-quiz.git
+   cd kahve-quiz
+   ```
+
+2. **Bağımlılıkları yükleyin**
+   ```bash
+   npm install
+   ```
+
+3. **Geliştirme sunucusunu başlatın**
+   ```bash
+   npm run dev
+   ```
+
+4. **Tarayıcıda açın**
+   ```
+   http://localhost:5173
+   ```
+
+## 🏗️ Proje Yapısı
+
+```
+src/
+├── components/           # React componentleri
+│   ├── StartScreen.tsx   # Başlangıç ekranı
+│   ├── QuizQuestion.tsx  # Soru ve seçenekler
+│   ├── Timer.tsx         # Süre sayacı
+│   └── FinalResults.tsx  # Sonuç modal'ı
+├── App.tsx              # Ana component
+├── App.css              # Global stiller
+├── index.css            # Tailwind CSS
+└── main.tsx             # React entry point
+
+public/
+├── app.png              # Uygulama görseli
+└── index.html           # HTML template
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎮 Nasıl Oynanır
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **"Quiz'i Başlat"** butonuna tıklayın
+2. **Her soru için 60 saniyeniz** var
+3. **Bir seçenek seçin** ve "Cevapla" butonuna basın
+4. **Anında feedback** alın (✅ Doğru / ❌ Yanlış)
+5. **10 soruyu tamamlayın** ve skorunuzu görün
+6. **"Tekrar Başla"** ile yeni bir tur başlatın
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📱 Responsive Tasarım
+
+- **Desktop** (1024px+) - Tam özellikli deneyim
+- **Tablet** (768px-1023px) - Optimize edilmiş layout
+- **Mobile** (320px-767px) - Dokunmatik uyumlu
+
+## ⚙️ Geliştirme Komutları
+
+```bash
+# Geliştirme sunucusu
+npm run dev
+
+# Production build
+npm run build
+
+# Build önizleme
+npm run preview
+
+# Linting
+npm run lint
 ```
+
+## 🏗️ Component Mimarisi
+
+### **App.tsx** - Ana Kontrolcü
+- State yönetimi
+- Quiz akış kontrolü
+- Child componentlere props geçişi
+
+### **StartScreen.tsx** - Başlangıç
+- Welcome ekranı
+- Quiz bilgileri
+- Başlatma butonu
+
+### **Timer.tsx** - Süre Sayacı
+- 60 saniye geri sayım
+- Otomatik reset
+- Görsel uyarılar
+
+### **QuizQuestion.tsx** - Soru Yönetimi
+- Soru ve seçenekler
+- Kullanıcı etkileşimi
+- Doğru/yanlış feedback
+
+### **FinalResults.tsx** - Sonuç Ekranı
+- Skor gösterimi
+- Yeniden başlatma
+- Modal tasarım
+
+## 🎨 Tasarım Sistemi
+
+### Renkler
+- **Kahverengi** (`brown-600`, `brown-700`) - Ana renk
+- **Mavi** (`blue-500`, `blue-600`) - Butonlar
+- **Yeşil** (`green-600`) - Doğru cevaplar
+- **Kırmızı** (`red-600`) - Yanlış cevaplar
+
+### Tipografi
+- **Başlıklar** - `text-2xl`, `text-3xl` bold
+- **Buton metinleri** - `font-bold`
+- **Normal metin** - `text-sm`, `text-base`
+
+## 🤝 Katkıda Bulunma
+
+1. Fork yapın
+2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
+3. Commit yapın (`git commit -m 'Add some AmazingFeature'`)
+4. Push yapın (`git push origin feature/AmazingFeature`)
+5. Pull Request açın
+
+## 📄 Lisans
+
+Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+
+## 👨‍💻 Geliştirici
+
+**İsminiz** - [@twitter_handle](https://twitter.com/twitter_handle)
+
+Proje Linki: [https://github.com/kullanici-adi/kahve-quiz](https://github.com/kullanici-adi/kahve-quiz)
+
+---
+
+⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
