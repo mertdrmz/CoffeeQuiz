@@ -146,22 +146,6 @@ npm run lint
 - **Buton metinleri** - `font-bold`
 - **Normal metin** - `text-sm`, `text-base`
 
-## 🤝 Katkıda Bulunma
-
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Commit yapın (`git commit -m 'Add some AmazingFeature'`)
-4. Push yapın (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
-
-## 📄 Lisans
-
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
-
-## 👨‍💻 Geliştirici
-
-**Mert Durmaz** - [@twitter_handle](https://twitter.com/twitter_handle)
-
 Proje Linki: [https://github.com/kullanici-adi/kahve-quiz](https://github.com/kullanici-adi/kahve-quiz)
 
 ---
