@@ -160,7 +160,7 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 ## 👨‍💻 Geliştirici
 
-**İsminiz** - [@twitter_handle](https://twitter.com/twitter_handle)
+**Mert Durmaz** - [@twitter_handle](https://twitter.com/twitter_handle)
 
 Proje Linki: [https://github.com/kullanici-adi/kahve-quiz](https://github.com/kullanici-adi/kahve-quiz)
 
