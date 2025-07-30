@@ -144,7 +144,7 @@ function App() {
    * - Doğruysa puanı artırır
    * - Sonraki soruya geçer veya quiz'i bitirir
    */
-  const handleAnswer = (selectedAnswer: string | null, isCorrect: boolean) => {
+  const handleAnswer = (_selectedAnswer: string | null, isCorrect: boolean) => {
     if (isCorrect) {
       setScore(prevScore => prevScore + 1); // Doğru cevap için puan ver
     }
