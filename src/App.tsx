@@ -179,9 +179,17 @@ function App() {
   return (
     // Arkaplan resmi ile tam ekran container
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4"
-      style={{ backgroundImage: `url('https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')` }}
+      className="min-h-screen bg-center bg-no-repeat flex items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: `url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
+      {/* Gradient overlay - arkaplan resminin üzerine koyu geçiş efekti 
+          Sol üstten sağ alta: %60 siyah → %40 siyah → %70 siyah */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70"></div>
       {/* Ana quiz kartı */}
       <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-xl p-6 max-w-md w-full min-h-[500px] flex flex-col">
         {/* Header - Başlık ve ilerleme */}
