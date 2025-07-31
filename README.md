@@ -15,10 +15,6 @@ Modern React ve TypeScript ile geliştirilmiş etkileşimli kahve bilgi quiz uyg
 - **Responsive tasarım** - Mobil ve desktop uyumlu
 - **Modern UI** - Tailwind CSS ile şık tasarım
 
-## 🚀 Canlı Demo
-
-[Demo'yu Görün](https://your-demo-link.com) *(Demo linkinizi buraya ekleyin)*
-
 ## 🛠️ Teknolojiler
 
 - **React 19.1.0** - Modern React hooks ile
@@ -30,23 +26,27 @@ Modern React ve TypeScript ile geliştirilmiş etkileşimli kahve bilgi quiz uyg
 ## 📦 Kurulum
 
 ### Gereksinimler
+
 - Node.js (18.0.0 veya üzeri)
 - npm veya yarn
 
 ### Adımlar
 
 1. **Projeyi klonlayın**
+
    ```bash
    git clone https://github.com/kullanici-adi/kahve-quiz.git
    cd kahve-quiz
    ```
 
 2. **Bağımlılıkları yükleyin**
+
    ```bash
    npm install
    ```
 
 3. **Geliştirme sunucusunu başlatın**
+
    ```bash
    npm run dev
    ```
@@ -75,7 +75,7 @@ public/
 └── index.html           # HTML template
 ```
 
-## 🎮 Nasıl Oynanır
+## 🎮 Nasıl Kullanılır
 
 1. **"Quiz'i Başlat"** butonuna tıklayın
 2. **Her soru için 60 saniyeniz** var
@@ -109,26 +109,31 @@ npm run lint
 ## 🏗️ Component Mimarisi
 
 ### **App.tsx** - Ana Kontrolcü
+
 - State yönetimi
 - Quiz akış kontrolü
 - Child componentlere props geçişi
 
 ### **StartScreen.tsx** - Başlangıç
+
 - Welcome ekranı
 - Quiz bilgileri
 - Başlatma butonu
 
 ### **Timer.tsx** - Süre Sayacı
+
 - 60 saniye geri sayım
 - Otomatik reset
 - Görsel uyarılar
 
 ### **QuizQuestion.tsx** - Soru Yönetimi
+
 - Soru ve seçenekler
 - Kullanıcı etkileşimi
 - Doğru/yanlış feedback
 
 ### **FinalResults.tsx** - Sonuç Ekranı
+
 - Skor gösterimi
 - Yeniden başlatma
 - Modal tasarım
@@ -136,18 +141,18 @@ npm run lint
 ## 🎨 Tasarım Sistemi
 
 ### Renkler
+
 - **Kahverengi** (`brown-600`, `brown-700`) - Ana renk
 - **Mavi** (`blue-500`, `blue-600`) - Butonlar
 - **Yeşil** (`green-600`) - Doğru cevaplar
 - **Kırmızı** (`red-600`) - Yanlış cevaplar
 
 ### Tipografi
+
 - **Başlıklar** - `text-2xl`, `text-3xl` bold
 - **Buton metinleri** - `font-bold`
 - **Normal metin** - `text-sm`, `text-base`
 
-Proje Linki: [https://github.com/kullanici-adi/kahve-quiz](https://github.com/kullanici-adi/kahve-quiz)
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!

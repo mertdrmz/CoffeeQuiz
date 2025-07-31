@@ -1,6 +1,6 @@
 /**
  * App.tsx - Ana Quiz Uygulaması
- * 
+ *
  * Bu component quiz'in merkezi kontrolcüsüdür:
  * - Tüm state yönetimini yapar
  * - Quiz akışını kontrol eder (başlangıç -> sorular -> sonuç)
@@ -8,7 +8,7 @@
  * - Quiz verilerini tutar ve karıştırır
  */
 
-import { useState} from "react";
+import { useState } from "react";
 import "./App.css";
 import StartScreen from "./components/StartScreen";
 import QuizQuestion from "./components/QuizQuestion";
@@ -100,8 +100,8 @@ function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0); // Hangi soruda olduğumuz (0-9)
   const [score, setScore] = useState(0); // Kullanıcının puanı (0-10)
   const [showFinalResult, setShowFinalResult] = useState(false); // Sonuç ekranı gösterilsin mi?
-  const [shuffledQuiz, setShuffledQuiz] = useState(() => 
-    [...quiz].sort(() => Math.random() - 0.5) // Quiz'i karıştırılmış halde başlat
+  const [shuffledQuiz, setShuffledQuiz] = useState(
+    () => [...quiz].sort(() => Math.random() - 0.5) // Quiz'i karıştırılmış halde başlat
   );
   const [quizStarted, setQuizStarted] = useState(false); // Quiz başladı mı?
 
@@ -146,7 +146,7 @@ function App() {
    */
   const handleAnswer = (_selectedAnswer: string | null, isCorrect: boolean) => {
     if (isCorrect) {
-      setScore(prevScore => prevScore + 1); // Doğru cevap için puan ver
+      setScore((prevScore) => prevScore + 1); // Doğru cevap için puan ver
     }
 
     // Sonraki soruya geç veya quiz'i bitir
@@ -178,7 +178,7 @@ function App() {
   // Ana quiz ekranı
   return (
     // Arkaplan resmi ile tam ekran container
-    <div 
+    <div
       className="min-h-screen bg-center bg-no-repeat flex items-center justify-center p-4 relative"
       style={{
         backgroundImage: `url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
@@ -201,7 +201,7 @@ function App() {
               {currentQuestion + 1} / {shuffledQuiz.length}
             </p>
             {/* Timer component */}
-            <Timer 
+            <Timer
               duration={60} // 60 saniye
               onTimeUp={handleTimeUp} // Süre dolduğunda çağrılır
               isActive={!showFinalResult} // Quiz bitmediyse aktif
