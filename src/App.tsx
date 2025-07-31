@@ -9,7 +9,7 @@
  */
 
 import { useState } from "react";
-import "./App.css";
+
 import StartScreen from "./components/StartScreen";
 import QuizQuestion from "./components/QuizQuestion";
 import Timer from "./components/Timer";
@@ -179,7 +179,7 @@ function App() {
   return (
     // Arkaplan resmi ile tam ekran container
     <div
-      className="min-h-screen bg-center bg-no-repeat flex items-center justify-center p-4 relative"
+      className="min-h-screen bg-center bg-no-repeat flex items-center justify-center p-3 sm:p-4 relative"
       style={{
         backgroundImage: `url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
         backgroundSize: "cover",
@@ -191,14 +191,14 @@ function App() {
           Sol üstten sağ alta: %60 siyah → %40 siyah → %70 siyah */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70"></div>
       {/* Ana quiz kartı */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-xl p-6 max-w-md w-full min-h-[500px] flex flex-col">
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full min-h-[450px] sm:min-h-[500px] flex flex-col">
         {/* Header - Başlık ve ilerleme */}
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-brown-600">Kahve Quiz</h1>
-          <div className="flex justify-between items-center mb-4">
+        <div className="text-center mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-brown-600 mb-2 sm:mb-3">Kahve Quiz</h1>
+          <div className="flex justify-between items-center mb-3 sm:mb-4">
             {/* Soru sayacı */}
-            <p className="text-gray-600">
-              {currentQuestion + 1} / {shuffledQuiz.length}
+            <p className="text-sm sm:text-base text-gray-600 font-medium">
+              Soru {currentQuestion + 1} / {shuffledQuiz.length}
             </p>
             {/* Timer component */}
             <Timer

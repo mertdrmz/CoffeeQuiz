@@ -17,10 +17,7 @@ interface TimerProps {
   resetTrigger: number; // Her yeni soruda reset etmek için
 }
 
-/**
- * Saniyeyi MM:SS formatına çevirir
- * Örnek: 65 -> "1:05", 5 -> "0:05"
- */
+
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60); // Dakikalar
   const secs = seconds % 60; // Saniyeler
@@ -64,7 +61,7 @@ const Timer: React.FC<TimerProps> = ({ duration, onTimeUp, isActive, resetTrigge
 
   return (
     <div
-      className={`text-lg font-bold ${
+      className={`text-sm sm:text-lg font-bold ${
         timeLeft <= 10 ? "text-red-600" : "text-gray-800" // 10 saniye kaldıysa kırmızı, yoksa gri
       }`}
     >

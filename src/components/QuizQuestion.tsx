@@ -59,12 +59,12 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
   return (
     <div>
       {/* Soru metni */}
-      <h2 className="text-lg font-semibold text-gray-800 mb-4 min-h-[3rem]">
+      <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 min-h-[2.5rem] sm:min-h-[3rem]">
         {question}
       </h2>
       
       {/* Seçenekler listesi */}
-      <div className="space-y-2 mb-6">
+      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
         {options.map((option, index) => {
           const isSelected = selectedAnswer === option; // Bu seçenek seçili mi?
           const isCorrect = option === correctAnswer; // Bu seçenek doğru mu?
@@ -73,7 +73,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
               key={index}
               onClick={() => setSelectedAnswer(option)} // Seçeneği seç
               disabled={showResult} // Sonuç gösteriliyorsa disable
-              className={`w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 min-h-[3rem] ${
+              className={`w-full text-left p-2 sm:p-3 rounded-lg border-2 transition-colors duration-200 min-h-[2.5rem] sm:min-h-[3rem] text-sm sm:text-base ${
                 showResult
                   ? isCorrect
                     ? "border-green-600 bg-green-50/80" // Doğru cevap: yeşil
@@ -86,10 +86,10 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
               }`}
             >
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">{option}</span>
+                <span className="text-sm sm:text-base font-medium leading-relaxed">{option}</span>
                 {/* Sonuç gösteriliyorsa emoji ekle */}
                 {showResult && (
-                  <span className="text-xl">
+                  <span className="text-lg sm:text-xl">
                     {isCorrect ? "✅" : isSelected ? "❌" : ""}
                   </span>
                 )}
@@ -104,7 +104,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
         <button
           onClick={handleSubmit}
           disabled={!selectedAnswer || showResult} // Seçim yapılmadıysa veya sonuç gösteriliyorsa disable
-          className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+          className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition-colors text-sm sm:text-base"
         >
           {showResult
             ? selectedAnswer === correctAnswer
