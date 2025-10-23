@@ -35,7 +35,7 @@ Modern React ve TypeScript ile geliştirilmiş etkileşimli kahve bilgi quiz uyg
 1. **Projeyi klonlayın**
 
    ```bash
-   git clone https://github.com/kullanici-adi/kahve-quiz.git
+   git clone https://github.com/mertdrmz/CoffeeQuiz
    cd kahve-quiz
    ```
 
